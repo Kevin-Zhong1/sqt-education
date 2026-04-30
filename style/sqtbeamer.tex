@@ -19,6 +19,7 @@
 % =========================
 % Graphics and diagrams
 % =========================
+\usepackage{svg}
 \usepackage{tikz}              % diagrams, automata, trees
 \usetikzlibrary{cd}
 \usepackage{tikz-cd}
@@ -147,10 +148,16 @@
 
 % MINTED ====================================================
 
-\usepackage[outputdir=build]{minted}
+\usepackage{minted}
 \usemintedstyle{vs}  % or: vs, github, colorful, etc.
 \setminted{
   fontsize=\footnotesize,
   breaklines=true,
   bgcolor=white
+}
+\setminted[asm]{
+  fontsize=\scriptsize,
+  breaklines=true,
+  bgcolor=white,
+  style=friendly
 }
