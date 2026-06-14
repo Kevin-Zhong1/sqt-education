@@ -1,0 +1,195 @@
+\section{Trading \& Markets}
+
+\begin{frame}{Trading Introduction}
+  We will introduce the concepts of
+  \begin{itemize}
+    \item Trading
+    \item Exchanges
+    \item Orders and the orderbook
+  \end{itemize}
+
+  \vspace{0.3cm}
+
+  \textcolor{sqt-question}{
+    I thought that firms don't care about prior knowledge of finance?
+  }
+
+  \vspace{0.3cm}
+
+  \textbf{Motivation:}
+  \begin{itemize}
+    \item this is only true during the interview stage for large HFT firms
+    \item beginner understanding of orderbook dynamics is useful for
+    \begin{itemize}
+      \item mock trading games
+      \item general understanding of the industry
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Spot Trades}
+  \begin{sqt:tip}
+    Alice says to Bob:
+    \begin{center}
+      ``I want to to sell you 5 AAPL shares. Each share will be sold at \$30.
+      This transfer will occur by the end of the next business day (tomorrow)."
+    \end{center}
+  \end{sqt:tip}
+
+  This defines a \textbf{spot trade} (as opposed to a \textbf{future trade}).
+
+  \begin{sqt:definition}
+    A \textbf{spot trade} is an agreement to exchange assets for money, with
+    the actual transfer occuring almost immediately (within 1 or 2 business days).
+    \begin{itemize}
+      \item sides (Alice is selling, Bob is buying)
+      \item quantity of the asset being traded ($5$)
+      \item price per asset ($\$30$)
+    \end{itemize}
+  \end{sqt:definition}
+\end{frame}
+
+\begin{frame}{Trade Execution and Settlement}
+  Once Bob \textbf{agrees} to this trade, the trade can be \textbf{executed}.
+
+  \begin{sqt:definition}
+    Upon trade \textbf{execution}, both parties are given \textbf{settlement obligations}.
+  \end{sqt:definition}
+  \begin{sqt:tip}
+    For example, in Alice \& Bob's equity spot trade, the obligations are:
+    \begin{itemize}
+      \item Alice must give Bob $5$ shares of AAPL by the settlement deadline
+      \item Bob must give Alice $5\times \$30 = \$150$ by the settlement deadline
+    \end{itemize}
+    Once the obligations are fulfilled, the trade is considered \textbf{settled}.
+  \end{sqt:tip}
+
+  Obligations on other asset classes and types of trades (e.g. futures and options)
+  are considerably more complex than this.
+  Concepts related to \textbf{clearing} and \textbf{settlement} are
+  considered part of the \textbf{post-trade life-cycle}.
+\end{frame}
+
+\begin{frame}{Holdings and Position}
+  At each point in time, each participant has a \textbf{holdings} and a \textbf{position} in each asset.
+  \begin{sqt:definition}
+    \textbf{Position} includes the effects of executed \textbf{trades} that have not been \textbf{settled} yet.
+  \end{sqt:definition}
+
+  \begin{center}
+    \input{assets/holdings_vs_positions.tex}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Holdings and Position}
+  \begin{sqt:result}
+    Your \textbf{exposure} and \textbf{PnL} is determined by your \textbf{position}.
+  \end{sqt:result}
+
+  This is because the terms of the trade (price, quantity) are locked in immediately upon trade execution,
+  so the transfer of assets and money can be thought of as occuring immediately.
+
+  \begin{sqt:tip}
+    For example, you agree to buy a share of AAPL at \$30.
+    Immediately, you are ``exposed'' to the movement of AAPL stock price.
+    If the market price goes down to \$10, you are still paying \$30 for it upon settlement,
+    but might end up having to sell it away for \$10.
+  \end{sqt:tip}
+
+  As a result, for trading games and simulations, we can abstract away the entire post-trade life-cycle
+  and just consider our asset and cash \textbf{position}, disregarding \textbf{holdings} entirely.
+\end{frame}
+
+\begin{frame}{What is an Exchange}
+  \begin{sqt:definition}
+    An \textbf{exchange} is a centralised venue for participants to\\
+    find willing counterparties to make \textbf{trades} with.
+  \end{sqt:definition}
+  \begin{sqt:definition}
+    If a trade does not occur on an exchange, then the trade is \textbf{over-the-counter} (OTC).
+  \end{sqt:definition}
+  \vspace{0.5cm}
+
+  \begin{center}
+    \begin{columns}
+      \begin{column}[t]{0.3\textwidth}
+        US exchanges
+        \begin{itemize}
+          \item (XNYS) NYSE
+          \item (XNAS) Nasdaq
+          \item (XCBO) CBOE
+          \item (XCME) CME
+        \end{itemize}
+      \end{column}
+
+      \begin{column}[t]{0.3\textwidth}
+        APAC exchanges
+        \begin{itemize}
+          \item (XHKG) HKEX
+          \item (XSHG) SSE
+          \item (XSGE) SHFE
+        \end{itemize}
+      \end{column}
+    \end{columns}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Limit Orders}
+  Each participant maintains a set of \textbf{limit orders}, which the exchange uses
+  to automatically infer whether they would agree to any hypothetical trade or not.\\
+  Here is what a limit order may look like:
+  \begin{sqt:tip}
+    Alice tells the exchange
+    \begin{center}
+      ``I am willing to sell a maximum of 5 AAPL shares.\\
+      I am willing to sell each share at a price of \$30 or better.''
+    \end{center}
+  \end{sqt:tip}
+
+  This is called \textbf{inserting} an order.
+
+  \begin{center}
+    \input{assets/limit_order_intro.tex}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Bids and Offers}
+  By submitting the \textbf{sell order}, Alice authorizes the exchange to accept trades on her behalf,
+  until 5 AAPL shares have been \textbf{sold}. Once this happens, the order is considered \textbf{filled}.
+
+  \begin{sqt:definition}
+    \begin{itemize}
+      \item A \textbf{bid} (buy order) expresses a willingness to buy
+      \item An \textbf{offer/ask} (sell order) expresses a willingness to sell
+    \end{itemize}
+  \end{sqt:definition}
+
+  \begin{center}
+    \input{assets/bids_and_asks.tex}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Orderbook}
+  \begin{sqt:definition}
+    The exchange keeps track of each participant's \textbf{open orders} (unfilled),\\
+    and collects them into an \textbf{orderbook}.
+  \end{sqt:definition}
+
+  \begin{center}
+    \input{assets/orderbook.tex}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Limit Orders In Cross}
+
+  \begin{sqt:definition}
+    Two limit orders are \textbf{in cross} if
+    \begin{itemize}
+      \item One order is a \textbf{bid} and the other is an \textbf{ask}.
+      \item There exists an \textbf{intersection} between the price ranges they are willing to trade at
+    \end{itemize}
+  \end{sqt:definition}
+  \begin{center}
+    \input{assets/in_cross.tex}
+  \end{center}
+\end{frame}

@@ -1,0 +1,305 @@
+% \tcbuselibrary{skins}
+
+% ============================================================
+% News feed infrastructure
+% ============================================================
+
+% Outer feed container — single tcolorbox, items sit inside with no inter-item gaps
+\newenvironment{feedbox}{%
+  \begin{tcolorbox}[
+    enhanced, sharp corners,
+    colback=gray!8, colframe=gray!25,
+    borderline west={3pt}{0pt}{sqt-themecolour},
+    boxrule=0.4pt, arc=0pt,
+    left=5pt, right=5pt, top=0pt, bottom=0pt,
+    before skip=2pt, after skip=2pt,
+  ]%
+  \setlength{\parskip}{0pt}\setlength{\parindent}{0pt}%
+}{%
+  \end{tcolorbox}%
+}
+
+% Thin separator between items
+\newcommand{\feedsep}{%
+  \noindent\textcolor{gray!35}{\rule{\linewidth}{0.4pt}}\par%
+}
+
+% Base row layout: {ts-color}{ts}{text-block}{source-color}{source}
+\newcommand{\feedrowbase}[5]{%
+  \vspace{4pt}\noindent%
+  \makebox[1.3cm][l]{\textcolor{#1}{\tiny\ttfamily #2}}%
+  \begin{minipage}[t]{\dimexpr\linewidth-4.5cm\relax}#3\end{minipage}%
+  \hfill%
+  \begin{minipage}[t]{3cm}\raggedleft\textcolor{#4}{\tiny\itshape #5}\end{minipage}%
+  \par\vspace{4pt}%
+}
+
+% \feedrow{ts}{text}{source}
+\newcommand{\feedrow}[3]{%
+  \feedrowbase{gray!60}{#1}{\footnotesize\raggedright #2}{gray!70}{#3}%
+}
+
+% \feedrowdim{ts}{text}{source}
+\newcommand{\feedrowdim}[3]{%
+  \feedrowbase{gray!30}{#1}{\footnotesize\color{gray!40}\raggedright #2}{gray!30}{#3}%
+}
+
+% \feedrowann{ts}{text}{source}{anncolor}{annotation}
+\newcommand{\feedrowann}[5]{%
+  \feedrowbase{gray!60}{#1}{%
+    \footnotesize\raggedright #2\\[2pt]%
+    \textcolor{#4}{\scriptsize\bfseries\itshape $\to$ #5}%
+  }{gray!70}{#3}%
+}
+
+% Feed header bar
+\newcommand{\feedheader}[1]{%
+  \noindent\colorbox{sqt-themecolour!85}{\makebox[\linewidth][l]{%
+    \textcolor{white}{\scriptsize\bfseries\hspace{4pt}\textbullet\enspace LIVE MARKET FEED\enspace%
+    \normalfont\itshape -- #1}%
+  }}%
+}
+
+% ============================================================
+% Market 1: Warmup Dice
+% ============================================================
+
+\begin{frame}{Market 1}
+  \begin{sqt:result}
+      \centering\large\textbf{I am about to roll some dice.}\\[4pt]
+      \textbf{What is the sum of five 6-sided dice rolls?}\\[6pt]
+      {\large\itshape Make your market!}
+  \end{sqt:result}
+\end{frame}
+
+\begin{frame}[t]{Market 1 -- News Feed}
+  \vspace{-3pt}
+  \feedheader{What is the sum of five 6-sided dice rolls?}
+  \begin{feedbox}
+    \feedrow{Roll 1}{\textbf{2}}{Live}
+    \only<2->{\feedsep\feedrow{Roll 2}{\textbf{6}}{Live}}
+    \only<3->{\feedsep\feedrow{Roll 3}{\textbf{1}}{Live}}
+    \only<4->{\feedsep\feedrow{Roll 4}{\textbf{2}}{Live}}
+    \only<5->{\feedsep\feedrow{Roll 5}{\textbf{4}}{Live}}
+  \end{feedbox}
+\end{frame}
+
+\begin{frame}{Market 1 -- Resolution}
+  \begin{center}
+    \vspace{0.3cm}
+    \textcolor{gray}{\small What is the sum of five 6-sided dice rolls?}
+
+    \vspace{0.5cm}
+    \begin{tcolorbox}[
+      enhanced, sharp corners,
+      colback=sqt-themecolour!15, colframe=sqt-themecolour,
+      left=20pt, right=20pt, top=12pt, bottom=12pt,
+      boxrule=1.5pt,
+    ]
+      \centering\Huge\textbf{15}
+    \end{tcolorbox}
+  \end{center}
+\end{frame}
+
+
+% ============================================================
+% Market 2: Buckingham Palace
+% ============================================================
+
+\begin{frame}{Market 2}
+  \begin{sqt:result}
+      \centering\large\textbf{How many rooms does Buckingham Palace have?}\\[6pt]
+      \textcolor{sqt-themecolour}{\large\itshape Make your market!}
+  \end{sqt:result}
+\end{frame}
+
+\begin{frame}[t]{Market 2 -- News Feed}
+  \vspace{-3pt}
+  \feedheader{How many rooms does Buckingham Palace have?}
+  \begin{feedbox}
+    \feedrow{09:31:04}{Buckingham Palace has served as the official London residence of the monarch since 1837}{Historic England}
+    \only<2->{\feedsep\feedrow{09:31:47}{The Royal Family FAQ prominently lists ``52 royal and guest bedrooms''}{Royal.uk}}
+    \only<3->{\feedsep\feedrow{09:32:15}{The Palace of Versailles has over 2,300 rooms}{Château de Versailles}}
+    \only<4->{\feedsep\feedrow{09:33:02}{The palace renovation budget hit \pounds369M after RAAC concrete was discovered in the walls}{Guardian, 2024}}
+    \only<5->{\feedsep\feedrow{09:33:41}{Windsor Castle has approximately 1,000 rooms}{Country Life}}
+    \only<6->{\feedsep\feedrow{09:34:28}{A full room inventory counts 19 state rooms, 52 bedrooms, 188 staff bedrooms, 92 offices, and 78 bathrooms among others}{DCMS}}
+  \end{feedbox}
+\end{frame}
+
+\begin{frame}{Market 2 -- Resolution}
+  \begin{center}
+    \vspace{0.3cm}
+    \textcolor{gray}{\small How many rooms does Buckingham Palace have?}
+
+    \vspace{0.5cm}
+    \begin{tcolorbox}[
+      enhanced, sharp corners,
+      colback=sqt-themecolour!15, colframe=sqt-themecolour,
+      left=20pt, right=20pt, top=12pt, bottom=12pt,
+      boxrule=1.5pt,
+    ]
+      \centering\Huge\textbf{775}
+    \end{tcolorbox}
+  \end{center}
+\end{frame}
+
+\begin{frame}[t]{Market 2 - Analysis}
+  \vspace{-3pt}
+  \feedheader{How many rooms does Buckingham Palace have?}
+  \begin{feedbox}
+    \feedrowann{09:31:04}{Buckingham Palace has served as the official London residence of the monarch since 1837}{Historic England}{green!55!black}{Foundational info, reliable source}
+    \feedsep\feedrowdim{09:31:47}{The Royal Family FAQ prominently lists ``52 royal and guest bedrooms''}{Royal.uk}
+    \feedsep\feedrowann{09:32:15}{The Palace of Versailles has over 2,300 rooms}{Château de Versailles}{orange!70!black}{Probably misleading -- not too related to Buckingham Palace}
+    \feedsep\feedrowann{09:33:02}{The palace renovation budget hit \pounds369M after RAAC concrete was discovered in the walls}{Guardian, 2024}{red!55!black}{Noise}
+    \feedsep\feedrowdim{09:33:41}{Windsor Castle has approximately 1,000 rooms}{Country Life}
+  \end{feedbox}
+\end{frame}
+
+
+% ============================================================
+% Market 3: McDonald's Global Restaurants
+% ============================================================
+
+\begin{frame}{Market 3}
+  \begin{sqt:result}
+      \textbf{How many McDonald's restaurants are there worldwide?}\\[6pt]
+      {\large\itshape Make your market!}
+  \end{sqt:result}
+\end{frame}
+
+\begin{frame}[t]{Market 3 -- News Feed}
+  \vspace{-3pt}
+  \feedheader{How many McDonald's restaurants are there worldwide?}
+  \begin{feedbox}
+    \feedrow{09:15:02}{The first McDonald's opened in San Bernardino, California in 1940}{McDonald's History}
+    \only<2->{\feedsep\feedrow{09:15:44}{McDonald's operates on a franchise model with over 95\% of restaurants franchisee-owned}{McDonald's Corporation}}
+    \only<3->{\feedsep\feedrow{09:16:21}{McDonald's serves approximately 70 million customers per day globally}{McDonald's Corporation}}
+    \only<4->{\feedsep\feedrow{09:17:03}{McDonald's added roughly 1{,}600 net new restaurants in 2023 alone}{McDonald's Annual Report}}
+    \only<5->{\feedsep\feedrow{09:17:52}{China alone has over 6{,}500 locations and is McDonald's fastest growing market}{Yicai Global, 2024}}
+    \only<6->{\feedsep\feedrow{09:18:34}{The US accounts for roughly 13{,}500 locations -- just under a third of the global total}{McDonald's IR, 2024}}
+  \end{feedbox}
+\end{frame}
+
+\begin{frame}{Market 3 -- Resolution}
+  \begin{center}
+    \vspace{0.3cm}
+    \textcolor{gray}{\small How many McDonald's restaurants are there worldwide?}
+
+    \vspace{0.5cm}
+    \begin{tcolorbox}[
+      enhanced, sharp corners,
+      colback=sqt-themecolour!15, colframe=sqt-themecolour,
+      left=20pt, right=20pt, top=12pt, bottom=12pt,
+      boxrule=1.5pt,
+    ]
+      \centering\Huge\textbf{43{,}477}
+    \end{tcolorbox}
+    \vspace{0.3cm}
+    \textcolor{gray}{\small As of end of 2024, per McDonald's annual report}
+  \end{center}
+\end{frame}
+
+
+% ============================================================
+% Market 4: Definite Integral
+% ============================================================
+
+\begin{frame}{Market 4}
+  \begin{sqt:result}
+      \centering\large\textbf{What's the value of this definite integral (to 2 d.p.)?}\\[6pt]
+      \[
+        \int_{0}^{4} \dfrac{4}{(9+6t)^5} + e^t \, dt
+      \]
+      {\large\itshape Make your market!}
+  \end{sqt:result}
+\end{frame}
+
+\begin{frame}[t]{Market 4 -- News Feed}
+  \vspace{-3pt}
+  \feedheader{Value of the definite integral (to 2 d.p.)?}
+  \begin{feedbox}
+    \vspace{3pt}
+    \begin{center}
+      $\displaystyle\int_{0}^{4} \dfrac{4}{(9+6t)^5} + e^t \, dt$
+    \end{center}
+    \feedsep
+    \feedrow{Hint 1}{The integral can be split into two independent terms}{Linearity of integration}
+    \only<2->{\feedsep\feedrow{Hint 2}{$e^t$ is its own antiderivative}{Standard result}}
+    \only<3->{\feedsep\feedrow{Hint 3}{For the left term, try the substitution $u = 9+6t$}{Integration technique}}
+    \only<4->{\feedsep\feedrow{Hint 4}{$e^2 = 7.389$}{Calculator}}
+  \end{feedbox}
+\end{frame}
+
+\begin{frame}{Market 4 -- Resolution}
+  \begin{center}
+    \vspace{0.3cm}
+    \textcolor{gray}{\small $\displaystyle\int_{0}^{4} \dfrac{4}{(9+6t)^5} + e^t \, dt$}
+
+    \vspace{0.5cm}
+    \begin{tcolorbox}[
+      enhanced, sharp corners,
+      colback=sqt-themecolour!15, colframe=sqt-themecolour,
+      left=20pt, right=20pt, top=12pt, bottom=12pt,
+      boxrule=1.5pt,
+    ]
+      \centering\Huge\textbf{53.60}
+    \end{tcolorbox}
+  \end{center}
+\end{frame}
+
+% ============================================================
+% Market 5: Bitcoin Closing Price -- October 23, 2023
+% ============================================================
+
+\begin{frame}{Market 5}
+  \begin{sqt:result}
+      \textbf{What was the closing price of Bitcoin (USD) on October 23, 2023?}\\[6pt]
+      {\large\itshape Make your market!}
+  \end{sqt:result}
+\end{frame}
+
+\begin{frame}[t]{Market 5 -- News Feed}
+  \vspace{-3pt}
+  \feedheader{Bitcoin closing price -- October 23, 2023}
+  \begin{feedbox}
+    \only<-6>{\feedrow{Jan 2023}{Bitcoin opened 2023 at \$16{,}606 -- down 75\% from its \$69K all-time high, coming off the FTX collapse and crypto winter}{CoinGecko}}
+    \only<2-6>{\feedsep}\only<2-7>{\feedrow{Jan 2023}{Bitcoin surged 40\% in January 2023 alone, its best monthly performance since October 2021, closing the month near \$23{,}000}{Coin360, Jan 31}}
+    \only<3-7>{\feedsep}\only<3-8>{\feedrow{Mar 2023}{Silicon Valley Bank collapsed Mar 10 -- Bitcoin initially fell to \$19{,}679 on contagion fears}{Fortune / FXStreet}}
+    \only<4-8>{\feedsep}\only<4-9>{\feedrow{Mar 2023}{Bitcoin rallied 27\% to \$26{,}500 as investors fled to ``decentralised safe haven'' assets}{CoinDesk}}
+    \only<5-9>{\feedsep}\only<5->{\feedrow{Jul 2023}{``ETF approval feels inevitable. BlackRock doesn't lose. Going to \$50K before year end.'' -- u/SatoshiBeliever}{r/CryptoCurrency}}
+    \only<6->{\feedsep\feedrow{09:30}{BTC opens October 23rd at ${\sim}$\$29{,}800, having been rangebound near \$28K for weeks}{CoinDesk, Oct 23}}
+    \only<7->{\feedsep\feedrow{10:15}{Eric Balchunas (Bloomberg ETF analyst): BlackRock's iShares Bitcoin Trust (IBTC) has appeared on the DTCC website -- ``def notable,'' approval ``certain/imminent''}{Bloomberg / X}}
+    \only<8->{\feedsep\feedrow{10:20}{US appeals court upholds Grayscale's legal victory over the SEC simultaneously}{Reuters}}
+    \only<9->{\feedsep\feedrow{13:00}{Bitcoin hit an intraday high of \$34{,}741}{FXStreet, Oct 23}}
+    \only<10->{\feedsep\feedrow{Nov 2023}{Bitcoin finished October 2023 up 28.6\% for the month, its strongest monthly performance since January 2023}{StatMuse / CoinDesk}}
+  \end{feedbox}
+\end{frame}
+
+\begin{frame}{Market 5 -- Resolution}
+  \begin{center}
+    \vspace{0.3cm}
+    \textcolor{gray}{\small Bitcoin closing price -- October 23, 2023}
+
+    \vspace{0.5cm}
+    \begin{tcolorbox}[
+      enhanced, sharp corners,
+      colback=sqt-themecolour!15, colframe=sqt-themecolour,
+      left=20pt, right=20pt, top=12pt, bottom=12pt,
+      boxrule=1.5pt,
+    ]
+      \centering\Huge\textbf{\$33{,}600}
+    \end{tcolorbox}
+    \vspace{0.3cm}
+    \textcolor{gray}{\small Intraday high \$34{,}741; pulled back to close ${\sim}$\$33{,}600}
+  \end{center}
+\end{frame}
+
+% Recap
+\begin{frame}{Takeaways}
+  What have we learned from this?
+  \begin{itemize}
+    \item Work empirically to build a range
+    \item Speed is good, but not without accuracy
+    \item Watch the market, ask yourself what others are thinking
+  \end{itemize}
+\end{frame}
